@@ -7,8 +7,9 @@ interface Props {
   title: string;
   subtitle?: string;
   bgColor?: string;
-  btnText: string;
-  btnOnPress: () => void;
+  btnText?: string;
+  btnEnabled?: boolean;
+  btnOnPress?: () => void;
 }
 
 const BottomBar = (props: Props) => {
@@ -25,13 +26,15 @@ const BottomBar = (props: Props) => {
 
       <View style={styles.rightCol}>
         <View style={styles.buttonOuter}>
-          <Pressable
-            onPress={() => props.btnOnPress?.()}
-            style={styles.button}
-            android_ripple={{ color: colors.rippleColor }}
-          >
-            <Text style={styles.buttonText}>{props.btnText}</Text>
-          </Pressable>
+          {!!props.btnEnabled && (
+            <Pressable
+              onPress={props.btnOnPress}
+              style={styles.button}
+              android_ripple={{ color: colors.rippleColor }}
+            >
+              <Text style={styles.buttonText}>{props.btnText}</Text>
+            </Pressable>
+          )}
         </View>
       </View>
     </View>

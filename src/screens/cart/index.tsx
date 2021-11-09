@@ -1,46 +1,61 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import faker from 'faker';
+import { View, Text, StyleSheet } from 'react-native';
 import { NavigationProp } from '@react-navigation/core';
 import { ParamListBase } from '@react-navigation/native';
 import { colors } from '../../styles/theme';
 import BottomBar from '../../components/bottom-bar';
-import ProductList, { Item } from '../../components/product-list';
+import ProductList from '../../components/product-list';
 import { formatPrice } from '../../helpers/format-price';
+import {
+  cartItemAdded,
+  cartItemRemoved,
+  getCartProducts,
+  getCartSubtotal,
+  getCartItemsCount,
+} from '../../store/cart';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { Product } from '../../interfaces/product';
 
 interface Navigation {
   navigation: NavigationProp<ParamListBase>;
 }
 
 const CartScreen = ({ navigation }: Navigation) => {
-  const mockItems = (length: number): Item[] => {
-    return new Array(length).fill(null).map((elm, index) => ({
-      id: ++index,
-      name: faker.fake('{{commerce.productName}}'),
-      price: Number(faker.fake('{{commerce.price}}')),
-    }));
+  const dispatch = useAppDispatch();
+  const products = useAppSelector(getCartProducts);
+  const cartItems = useAppSelector(state => state.cart);
+  const cartSubtotal = useAppSelector(getCartSubtotal);
+  const cartItemsCount = useAppSelector(getCartItemsCount);
+
+  const onAddProduct = (product: Product) => {
+    dispatch(cartItemAdded(product));
   };
 
-  const items = mockItems(50);
-
-  const onAddProduct = (itemId: number) => {};
-  const onRemoveProduct = (itemId: number) => {};
+  const onRemoveProduct = (product: Product) => {
+    dispatch(cartItemRemoved(product));
+  };
 
   return (
     <View style={styles.container}>
-      <ProductList
-        items={items}
-        onAdd={onAddProduct}
-        onRemove={onRemoveProduct}
-        variant="light"
-      />
+      {products.length === 0 ? (
+        <View style={styles.emptyCart}>
+          <Text style={styles.emptyCartText}>Your cart is empty.</Text>
+        </View>
+      ) : (
+        <ProductList
+          products={products}
+          cartItems={cartItems.products}
+          onAdd={onAddProduct}
+          onRemove={onRemoveProduct}
+          variant="cart"
+        />
+      )}
 
       <BottomBar
-        title={`Subtotal: ${formatPrice('$', 500.0)}`}
-        subtitle={`You order (3)`}
+        title={`Subtotal: ${formatPrice('$', cartSubtotal)}`}
+        subtitle={`You order (${cartItemsCount})`}
         btnText="Checkout"
-        btnOnPress={() => {}}
-        bgColor={colors.lightGray}
+        btnEnabled={products.length > 0}
       />
     </View>
   );
@@ -51,7 +66,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.white,
+    backgroundColor: colors.lightGray,
+  },
+  emptyCart: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptyCartText: {
+    fontSize: 18,
+    color: colors.black,
   },
 });
 

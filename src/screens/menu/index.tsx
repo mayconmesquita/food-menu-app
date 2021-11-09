@@ -1,45 +1,68 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import faker from 'faker';
 import { NavigationProp } from '@react-navigation/core';
 import { ParamListBase } from '@react-navigation/native';
 import { colors } from '../../styles/theme';
 import BottomBar from '../../components/bottom-bar';
-import ProductList, { Item } from '../../components/product-list';
+import ProductList from '../../components/product-list';
 import { formatPrice } from '../../helpers/format-price';
+import { productBatchAdded } from '../../store/products';
+import {
+  cartItemAdded,
+  cartItemRemoved,
+  getCartSubtotal,
+  getCartItemsCount,
+} from '../../store/cart';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { mockProducts } from '../../helpers/mock-products';
+import { Product } from '../../interfaces/product';
 
 interface Navigation {
   navigation: NavigationProp<ParamListBase>;
 }
 
 const MenuScreen = ({ navigation }: Navigation) => {
-  const mockItems = (length: number): Item[] => {
-    return new Array(length).fill(null).map((elm, index) => ({
-      id: ++index,
-      name: faker.fake('{{commerce.productName}}'),
-      price: Number(faker.fake('{{commerce.price}}')),
-    }));
+  const dispatch = useAppDispatch();
+  const products = useAppSelector(state => state.products);
+  const cartItems = useAppSelector(state => state.cart);
+  const cartSubtotal = useAppSelector(getCartSubtotal);
+  const cartItemsCount = useAppSelector(getCartItemsCount);
+
+  useEffect(() => {
+    dispatch(productBatchAdded(mockProducts(10)));
+  }, []);
+
+  const loadMore = () => {
+    if (products.data.length < 50) {
+      dispatch(productBatchAdded(mockProducts(10)));
+    }
   };
 
-  const items = mockItems(50);
+  const onAddProduct = (product: Product) => {
+    dispatch(cartItemAdded(product));
+  };
 
-  const onAddProduct = (itemId: number) => {};
-  const onRemoveProduct = (itemId: number) => {};
+  const onRemoveProduct = (product: Product) => {
+    dispatch(cartItemRemoved(product));
+  };
 
   return (
     <View style={styles.container}>
       <ProductList
-        items={items}
+        products={products.data}
+        cartItems={cartItems.products}
         onAdd={onAddProduct}
         onRemove={onRemoveProduct}
-        variant="solid"
+        variant="menu"
+        onEndReached={loadMore}
       />
 
       <BottomBar
-        title={`Subtotal: ${formatPrice('$', 500.0)}`}
-        subtitle={`You order (3)`}
+        title={`Subtotal: ${formatPrice('$', cartSubtotal)}`}
+        subtitle={`You order (${cartItemsCount})`}
         btnText="Continue"
         btnOnPress={() => navigation.navigate('Cart')}
+        btnEnabled={cartItemsCount > 0}
       />
     </View>
   );

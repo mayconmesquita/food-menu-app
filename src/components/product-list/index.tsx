@@ -1,28 +1,31 @@
 import React from 'react';
 import { View, Text, FlatList } from 'react-native';
 import AddToCart from '../../components/add-to-cart';
-import { styles } from './styles';
 import { formatPrice } from '../../helpers/format-price';
-
-export interface Item {
-  id: number;
-  name: string;
-  price: number;
-}
+import { CartItems } from '../../interfaces/cart';
+import { Product } from '../../interfaces/product';
+import { styles } from './styles';
 
 interface Props {
-  items: Item[];
-  variant: 'solid' | 'light';
-  onAdd: (itemId: number) => void;
-  onRemove: (itemId: number) => void;
+  products: Product[];
+  cartItems: CartItems;
+  variant: 'menu' | 'cart';
+  onAdd: (product: Product) => void;
+  onRemove: (product: Product) => void;
+  onEndReached?: () => void;
 }
 
 const ProductList = (props: Props) => {
-  const renderItem = ({ item }: { item: Item }) => {
-    const { name, price } = item;
+  const renderItem = ({ item }: { item: Product }) => {
+    const { id, name, price } = item;
+
+    const productPrice =
+      props.variant === 'cart' && props.cartItems[id]
+        ? formatPrice('$', props.cartItems[id].subtotal)
+        : formatPrice('$', price);
 
     const containerVariant =
-      props.variant === 'solid' ? styles.solidContainer : styles.lightContainer;
+      props.variant === 'menu' ? styles.solidContainer : styles.lightContainer;
 
     return (
       <View style={[styles.itemContainer, containerVariant]}>
@@ -30,31 +33,34 @@ const ProductList = (props: Props) => {
           <Text style={styles.name} numberOfLines={1}>
             {name}
           </Text>
-          <Text style={styles.price}>{formatPrice('$', price)}</Text>
+          <Text style={styles.price}>{productPrice}</Text>
         </View>
 
         <View style={styles.rightContainer}>
           <AddToCart
-            counter={0}
-            onAdd={props.onAdd}
-            onRemove={props.onRemove}
+            counter={props.cartItems?.[id]?.quantity}
+            onAdd={() => props.onAdd(item)}
+            onRemove={() => props.onRemove(item)}
           />
         </View>
       </View>
     );
   };
 
-  const keyExtractor = ({ id }: Item, index: number) => {
+  const keyExtractor = ({ id }: Product, index: number) => {
     return `item-${id || index}`;
   };
 
   return (
     <FlatList
-      data={props.items || []}
+      data={props.products || []}
       renderItem={renderItem}
       keyExtractor={keyExtractor}
       contentContainerStyle={styles.container}
       maxToRenderPerBatch={10}
+      initialNumToRender={10}
+      onEndReachedThreshold={0.3}
+      onEndReached={props.onEndReached}
     />
   );
 };

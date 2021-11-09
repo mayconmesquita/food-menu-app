@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     height: 32,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.primary + '10',
+    backgroundColor: colors.primary + '15',
     justifyContent: 'center',
   },
   containerSelected: {
