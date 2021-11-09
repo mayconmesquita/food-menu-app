@@ -25,7 +25,7 @@ const AddToCart = ({ counter, onAdd, onRemove }: Props) => {
       ) : (
         <View style={[styles.container, styles.containerSelected]}>
           <Pressable style={styles.button} onPress={onRemove}>
-            <Text style={styles.removeBtnIcon}>—</Text>
+            <Text style={styles.removeBtnIcon}>–</Text>
           </Pressable>
 
           <Text style={styles.counter}>{counter}</Text>

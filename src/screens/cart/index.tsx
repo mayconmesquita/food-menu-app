@@ -73,8 +73,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emptyCartText: {
-    fontSize: 18,
-    color: colors.black,
+    fontSize: 17,
+    color: colors.darkGray,
   },
 });
 

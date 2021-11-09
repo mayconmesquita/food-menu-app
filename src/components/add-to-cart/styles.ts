@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { colors } from '../../styles/theme';
 
 export const styles = StyleSheet.create({
@@ -34,8 +34,8 @@ export const styles = StyleSheet.create({
   },
   removeBtnIcon: {
     color: colors.white,
-    fontSize: 16,
-    marginTop: 2,
+    fontSize: 18,
+    marginTop: Platform.OS === 'android' ? 2 : 0,
   },
   addBtnIcon: {
     color: colors.white,

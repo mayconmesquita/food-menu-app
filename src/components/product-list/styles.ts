@@ -1,7 +1,7 @@
 import { StyleSheet, Dimensions } from 'react-native';
 import { colors } from '../../styles/theme';
 
-const screenWidth = Dimensions.get('screen').width;
+const screenWidth = Dimensions.get('window').width;
 
 export const styles = StyleSheet.create({
   container: {
@@ -11,9 +11,9 @@ export const styles = StyleSheet.create({
   itemContainer: {
     flex: 4,
     height: 80,
-    width: screenWidth - 24,
+    width: screenWidth - 26,
     backgroundColor: colors.white,
-    marginHorizontal: 8,
+    marginHorizontal: 4,
     marginBottom: 10,
     padding: 16,
     borderRadius: 16,
@@ -26,6 +26,7 @@ export const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderColor: colors.gray,
     borderBottomWidth: 1,
+    borderRadius: 0,
   },
   name: {
     color: colors.black,
@@ -46,6 +47,6 @@ export const styles = StyleSheet.create({
     width: 30,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
   },
 });
