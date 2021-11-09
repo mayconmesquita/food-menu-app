@@ -1,6 +1,6 @@
-import React from "react";
-import Navigation from "./src/screens/navigation";
-import { StatusBar } from "expo-status-bar";
+import React from 'react';
+import Navigation from './src/screens/navigation';
+import { StatusBar } from 'expo-status-bar';
 
 const App = () => {
   return (

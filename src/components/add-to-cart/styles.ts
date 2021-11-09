@@ -1,5 +1,5 @@
-import { StyleSheet } from "react-native";
-import { colors } from "../../styles/theme";
+import { StyleSheet } from 'react-native';
+import { colors } from '../../styles/theme';
 
 export const styles = StyleSheet.create({
   container: {
@@ -8,28 +8,28 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     width: 84,
     height: 32,
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: colors.primary + "10",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.primary + '10',
+    justifyContent: 'center',
   },
   containerSelected: {
     backgroundColor: colors.primary,
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
   },
   buttonOuter: {
     borderRadius: 8,
-    overflow: "hidden",
+    overflow: 'hidden',
   },
   button: {
     width: 28,
     height: 32,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   addBtnText: {
     fontSize: 15,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     color: colors.primary,
   },
   removeBtnIcon: {

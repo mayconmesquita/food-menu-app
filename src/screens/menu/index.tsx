@@ -1,12 +1,12 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
-import faker from "faker";
-import { NavigationProp } from "@react-navigation/core";
-import { ParamListBase } from "@react-navigation/native";
-import { colors } from "../../styles/theme";
-import BottomBar from "../../components/bottom-bar";
-import ProductList, { Item } from "../../components/product-list";
-import { formatPrice } from "../../helpers/format-price";
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import faker from 'faker';
+import { NavigationProp } from '@react-navigation/core';
+import { ParamListBase } from '@react-navigation/native';
+import { colors } from '../../styles/theme';
+import BottomBar from '../../components/bottom-bar';
+import ProductList, { Item } from '../../components/product-list';
+import { formatPrice } from '../../helpers/format-price';
 
 interface Navigation {
   navigation: NavigationProp<ParamListBase>;
@@ -16,8 +16,8 @@ const MenuScreen = ({ navigation }: Navigation) => {
   const mockItems = (length: number): Item[] => {
     return new Array(length).fill(null).map((elm, index) => ({
       id: ++index,
-      name: faker.fake("{{commerce.productName}}"),
-      price: Number(faker.fake("{{commerce.price}}")),
+      name: faker.fake('{{commerce.productName}}'),
+      price: Number(faker.fake('{{commerce.price}}')),
     }));
   };
 
@@ -36,10 +36,10 @@ const MenuScreen = ({ navigation }: Navigation) => {
       />
 
       <BottomBar
-        title={`Subtotal: ${formatPrice("$", 500.0)}`}
+        title={`Subtotal: ${formatPrice('$', 500.0)}`}
         subtitle={`You order (3)`}
         btnText="Continue"
-        btnOnPress={() => navigation.navigate("Cart")}
+        btnOnPress={() => navigation.navigate('Cart')}
       />
     </View>
   );
@@ -48,8 +48,8 @@ const MenuScreen = ({ navigation }: Navigation) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: colors.lightGray,
   },
 });

@@ -1,7 +1,7 @@
-import { StyleSheet, Dimensions } from "react-native";
-import { colors } from "../../styles/theme";
+import { StyleSheet, Dimensions } from 'react-native';
+import { colors } from '../../styles/theme';
 
-const screenWidth = Dimensions.get("screen").width;
+const screenWidth = Dimensions.get('screen').width;
 
 export const styles = StyleSheet.create({
   container: {
@@ -17,19 +17,19 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
     padding: 16,
     borderRadius: 16,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   solidContainer: {
     backgroundColor: colors.white,
   },
   lightContainer: {
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
     borderColor: colors.gray,
     borderBottomWidth: 1,
   },
   name: {
     color: colors.black,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 17,
     marginBottom: 2,
   },
@@ -44,8 +44,8 @@ export const styles = StyleSheet.create({
   rightContainer: {
     flex: 1,
     width: 30,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

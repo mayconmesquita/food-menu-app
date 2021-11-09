@@ -1,8 +1,8 @@
-import React from "react";
-import { View, Text, FlatList } from "react-native";
-import AddToCart from "../../components/add-to-cart";
-import { styles } from "./styles";
-import { formatPrice } from "../../helpers/format-price";
+import React from 'react';
+import { View, Text, FlatList } from 'react-native';
+import AddToCart from '../../components/add-to-cart';
+import { styles } from './styles';
+import { formatPrice } from '../../helpers/format-price';
 
 export interface Item {
   id: number;
@@ -12,7 +12,7 @@ export interface Item {
 
 interface Props {
   items: Item[];
-  variant: "solid" | "light";
+  variant: 'solid' | 'light';
   onAdd: (itemId: number) => void;
   onRemove: (itemId: number) => void;
 }
@@ -22,7 +22,7 @@ const ProductList = (props: Props) => {
     const { name, price } = item;
 
     const containerVariant =
-      props.variant === "solid" ? styles.solidContainer : styles.lightContainer;
+      props.variant === 'solid' ? styles.solidContainer : styles.lightContainer;
 
     return (
       <View style={[styles.itemContainer, containerVariant]}>
@@ -30,7 +30,7 @@ const ProductList = (props: Props) => {
           <Text style={styles.name} numberOfLines={1}>
             {name}
           </Text>
-          <Text style={styles.price}>{formatPrice("$", price)}</Text>
+          <Text style={styles.price}>{formatPrice('$', price)}</Text>
         </View>
 
         <View style={styles.rightContainer}>

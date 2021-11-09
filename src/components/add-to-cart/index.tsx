@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { View, Text, Pressable } from "react-native";
-import { colors } from "../../styles/theme";
-import { styles } from "./styles";
+import React, { useState } from 'react';
+import { View, Text, Pressable } from 'react-native';
+import { colors } from '../../styles/theme';
+import { styles } from './styles';
 
 interface Props {
   counter: number;
