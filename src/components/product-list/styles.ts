@@ -1,19 +1,22 @@
-import { StyleSheet, Dimensions } from 'react-native';
+/* istanbul ignore file */
+import { StyleSheet, Dimensions, Platform } from 'react-native';
 import { colors } from '../../styles/theme';
 
 const screenWidth = Dimensions.get('window').width;
+const containerScrollOffset = Platform.select({ web: 18, native: 0 }) || 0;
+const itemScrollOffset = Platform.select({ web: 48, native: 28 }) || 28;
 
 export const styles = StyleSheet.create({
   container: {
     paddingTop: 16,
     paddingBottom: 88,
+    alignItems: 'center',
+    width: screenWidth - containerScrollOffset,
   },
   itemContainer: {
-    flex: 4,
+    width: screenWidth - itemScrollOffset,
     height: 80,
-    width: screenWidth - 26,
     backgroundColor: colors.white,
-    marginHorizontal: 4,
     marginBottom: 10,
     padding: 16,
     borderRadius: 16,

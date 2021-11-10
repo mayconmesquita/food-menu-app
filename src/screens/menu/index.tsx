@@ -7,19 +7,22 @@ import BottomBar from '../../components/bottom-bar';
 import ProductList from '../../components/product-list';
 import { formatPrice } from '../../helpers/format-price';
 import { productBatchAdded } from '../../store/products';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { mockProducts } from '../../helpers/mock-product';
+import { Product } from '../../interfaces/product';
 import {
   cartItemAdded,
   cartItemRemoved,
   getCartSubtotal,
   getCartItemsCount,
 } from '../../store/cart';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { mockProducts } from '../../helpers/mock-products';
-import { Product } from '../../interfaces/product';
 
 interface Navigation {
   navigation: NavigationProp<ParamListBase>;
 }
+
+const ITEMS_PER_BATCH = 10;
+const BATCH_LIMIT = 5;
 
 const MenuScreen = ({ navigation }: Navigation) => {
   const dispatch = useAppDispatch();
@@ -29,14 +32,8 @@ const MenuScreen = ({ navigation }: Navigation) => {
   const cartItemsCount = useAppSelector(getCartItemsCount);
 
   useEffect(() => {
-    dispatch(productBatchAdded(mockProducts(10)));
+    dispatch(productBatchAdded(mockProducts(ITEMS_PER_BATCH)));
   }, []);
-
-  const loadMore = () => {
-    if (products.data.length < 50) {
-      dispatch(productBatchAdded(mockProducts(10)));
-    }
-  };
 
   const onAddProduct = (product: Product) => {
     dispatch(cartItemAdded(product));
@@ -44,6 +41,13 @@ const MenuScreen = ({ navigation }: Navigation) => {
 
   const onRemoveProduct = (product: Product) => {
     dispatch(cartItemRemoved(product));
+  };
+
+  /* istanbul ignore next */
+  const loadMore = () => {
+    if (products.page < BATCH_LIMIT) {
+      dispatch(productBatchAdded(mockProducts(ITEMS_PER_BATCH)));
+    }
   };
 
   return (

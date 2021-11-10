@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { Platform, StyleSheet } from 'react-native';
 import { colors } from '../../styles/theme';
 

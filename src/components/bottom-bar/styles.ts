@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { StyleSheet } from 'react-native';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 import { colors } from '../../styles/theme';

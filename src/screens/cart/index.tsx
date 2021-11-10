@@ -6,6 +6,8 @@ import { colors } from '../../styles/theme';
 import BottomBar from '../../components/bottom-bar';
 import ProductList from '../../components/product-list';
 import { formatPrice } from '../../helpers/format-price';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { Product } from '../../interfaces/product';
 import {
   cartItemAdded,
   cartItemRemoved,
@@ -13,8 +15,6 @@ import {
   getCartSubtotal,
   getCartItemsCount,
 } from '../../store/cart';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { Product } from '../../interfaces/product';
 
 interface Navigation {
   navigation: NavigationProp<ParamListBase>;

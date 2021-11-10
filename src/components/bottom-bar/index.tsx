@@ -31,6 +31,7 @@ const BottomBar = (props: Props) => {
               onPress={props.btnOnPress}
               style={styles.button}
               android_ripple={{ color: colors.rippleColor }}
+              testID="bottomBarButton"
             >
               <Text style={styles.buttonText}>{props.btnText}</Text>
             </Pressable>

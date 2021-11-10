@@ -2,14 +2,16 @@ import { createAction, createReducer, PayloadAction } from '@reduxjs/toolkit';
 import { Product } from '../interfaces/product';
 
 // Interface
-interface ProductState {
+export interface ProductState {
   isLoading: boolean;
+  page: number;
   data: Product[];
 }
 
 // Initial state
 const initialProductState: ProductState = {
   isLoading: false,
+  page: 0,
   data: [],
 };
 
@@ -41,8 +43,7 @@ export default createReducer(initialProductState, {
     state: ProductState,
     action: PayloadAction<Product[]>,
   ) => {
-    const products = action.payload;
-    products.forEach(product => {
+    action.payload.forEach(product => {
       if (state.data.find(item => item.id === product.id)) {
         return;
       }
@@ -53,5 +54,7 @@ export default createReducer(initialProductState, {
         price: product.price,
       });
     });
+
+    state.page = ++state.page;
   },
 });

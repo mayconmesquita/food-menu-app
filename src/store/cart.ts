@@ -5,7 +5,7 @@ import { Product } from '../interfaces/product';
 import { RootState } from './configureStore';
 
 // Interface
-interface CartState {
+export interface CartState {
   isLoading: boolean;
   products: CartItems;
   subtotal: number;

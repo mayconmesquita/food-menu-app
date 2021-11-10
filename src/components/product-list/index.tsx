@@ -8,10 +8,10 @@ import { styles } from './styles';
 
 interface Props {
   products: Product[];
-  cartItems: CartItems;
+  cartItems?: CartItems;
   variant: 'menu' | 'cart';
-  onAdd: (product: Product) => void;
-  onRemove: (product: Product) => void;
+  onAdd?: (product: Product) => void;
+  onRemove?: (product: Product) => void;
   onEndReached?: () => void;
 }
 
@@ -20,8 +20,8 @@ const ProductList = (props: Props) => {
     const { id, name, price } = item;
 
     const productPrice =
-      props.variant === 'cart' && props.cartItems[id]
-        ? formatPrice('$', props.cartItems[id].subtotal)
+      props.variant === 'cart' && props.cartItems?.[id]
+        ? formatPrice('$', props.cartItems?.[id]?.subtotal)
         : formatPrice('$', price);
 
     const containerVariant =
@@ -38,9 +38,9 @@ const ProductList = (props: Props) => {
 
         <View style={styles.rightContainer}>
           <AddToCart
-            counter={props.cartItems?.[id]?.quantity}
-            onAdd={() => props.onAdd(item)}
-            onRemove={() => props.onRemove(item)}
+            counter={props.cartItems?.[id]?.quantity || 0}
+            onAdd={() => props.onAdd?.(item)}
+            onRemove={() => props.onRemove?.(item)}
           />
         </View>
       </View>
@@ -48,12 +48,12 @@ const ProductList = (props: Props) => {
   };
 
   const keyExtractor = ({ id }: Product, index: number) => {
-    return `item-${id || index}`;
+    return `item-${id}`;
   };
 
   return (
     <FlatList
-      data={props.products || []}
+      data={props.products}
       renderItem={renderItem}
       keyExtractor={keyExtractor}
       contentContainerStyle={styles.container}

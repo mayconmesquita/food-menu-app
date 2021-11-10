@@ -5,8 +5,8 @@ import { styles } from './styles';
 
 interface Props {
   counter: number;
-  onAdd: () => void;
-  onRemove: () => void;
+  onAdd?: () => void;
+  onRemove?: () => void;
 }
 
 const AddToCart = ({ counter, onAdd, onRemove }: Props) => {
@@ -24,13 +24,13 @@ const AddToCart = ({ counter, onAdd, onRemove }: Props) => {
         </View>
       ) : (
         <View style={[styles.container, styles.containerSelected]}>
-          <Pressable style={styles.button} onPress={onRemove}>
+          <Pressable style={styles.button} onPress={onRemove} testID="remove">
             <Text style={styles.removeBtnIcon}>–</Text>
           </Pressable>
 
           <Text style={styles.counter}>{counter}</Text>
 
-          <Pressable style={styles.button} onPress={onAdd}>
+          <Pressable style={styles.button} onPress={onAdd} testID="add">
             <Text style={styles.addBtnIcon}>+</Text>
           </Pressable>
         </View>
